@@ -1,65 +1,167 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
 
 export default function Home() {
+  const [theme, setTheme] = useState("light");
+  const [accent, setAccent] = useState("purple");
+  const [reduceMotion, setReduceMotion] = useState(true);
+  const [autoPlay, setAutoPlay] = useState(true);
+  const [highQuality, setHighQuality] = useState(false);
+
+  const accentColors: any = {
+    red: "bg-red-400",
+    yellow: "bg-yellow-400",
+    green: "bg-green-400",
+    purple: "bg-purple-500",
+    pink: "bg-pink-400",
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+      <div className="bg-white w-full max-w-xl rounded-3xl shadow-xl p-8 space-y-8">
+
+        {/* Header */}
+        <div>
+          <h2 className="text-2xl font-semibold text-gray-800">Appearance</h2>
+          <p className="text-sm text-gray-500">
+            Set or customize your preferences for the system
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="border-t" />
+
+        {/* Language */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h3 className="font-medium text-gray-700">Language</h3>
+            <p className="text-sm text-gray-500">
+              Select the language of the platform
+            </p>
+          </div>
+
+          <select className="border rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-purple-400 outline-none">
+            <option>English</option>
+            <option>Spanish</option>
+          </select>
         </div>
-      </main>
+
+        <div className="border-t" />
+
+        {/* Interface Theme */}
+        <div>
+          <h3 className="font-medium text-gray-700">Interface theme</h3>
+          <p className="text-sm text-gray-500 mb-4">
+            Customize your application appearance
+          </p>
+
+          <div className="flex gap-4">
+
+            {["auto", "light", "dark"].map((item) => (
+              <div
+                key={item}
+                onClick={() => setTheme(item)}
+                className={`flex-1 cursor-pointer rounded-2xl border p-3 transition relative
+                ${theme === item
+                    ? "border-purple-500 shadow-md"
+                    : "border-gray-200"
+                  }`}
+              >
+                <div
+                  className={`h-20 rounded-lg mb-3
+                  ${item === "dark"
+                      ? "bg-gradient-to-br from-purple-700 to-indigo-900"
+                      : item === "light"
+                        ? "bg-gray-100"
+                        : "bg-gray-200"
+                    }`}
+                />
+
+                <p
+                  className={`text-sm font-medium text-center capitalize
+                  ${theme === item ? "text-purple-600" : "text-gray-600"
+                    }`}
+                >
+                  {item}
+                </p>
+
+                {theme === item && (
+                  <div className="absolute bottom-10 left-3 w-5 h-5 bg-purple-600 rounded-full flex items-center justify-center text-white text-xs">
+                    ✓
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="border-t" />
+
+        {/* Accent Color */}
+        <div>
+          <h3 className="font-medium text-gray-700">Accent color</h3>
+          <p className="text-sm text-gray-500 mb-4">
+            Pick your platform's main color
+          </p>
+
+          <div className="flex gap-3">
+            {Object.keys(accentColors).map((color) => (
+              <div
+                key={color}
+                onClick={() => setAccent(color)}
+                className={`w-6 h-6 rounded-full cursor-pointer ${accentColors[color]}
+                ${accent === color ? "ring-2 ring-offset-2 ring-gray-400" : ""}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="border-t" />
+
+        {/* Toggles */}
+        <div className="space-y-5">
+          <Toggle label="Reduce motion" state={reduceMotion} setState={setReduceMotion} />
+          <Toggle label="Auto play" state={autoPlay} setState={setAutoPlay} />
+          <Toggle label="High quality photo" state={highQuality} setState={setHighQuality} />
+        </div>
+
+        <div className="border-t" />
+
+        {/* Buttons */}
+        <div className="flex justify-between items-center">
+          <button className="text-gray-400 text-sm hover:text-gray-600">
+            Reset to default
+          </button>
+
+          <div className="flex gap-3">
+            <button className="px-5 py-2 border rounded-xl text-gray-600 hover:bg-gray-100">
+              Cancel
+            </button>
+            <button className="px-6 py-2 rounded-xl text-white bg-gradient-to-r from-purple-500 to-indigo-600 shadow-md hover:opacity-90">
+              Save Preferences
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  );
+}
+
+function Toggle({ label, state, setState }: any) {
+  return (
+    <div className="flex justify-between items-center">
+      <span className="text-gray-700">{label}</span>
+
+      <div
+        onClick={() => setState(!state)}
+        className={`w-11 h-6 flex items-center rounded-full p-1 cursor-pointer transition
+        ${state ? "bg-purple-500" : "bg-gray-300"}`}
+      >
+        <div
+          className={`bg-white w-4 h-4 rounded-full shadow-md transform transition
+          ${state ? "translate-x-5" : ""}`}
+        />
+      </div>
     </div>
   );
 }
